@@ -1,0 +1,40 @@
+extends layout 
+
+block content
+    h1 Register
+    form(method="POST")
+
+        if(err)
+            if Array.isArray(err)
+                each error in err
+                    p(class="text-danger")= error.msg
+            else
+                p(class="text-danger")= err
+        
+        .form-floating.mb-3
+            input(type="text" name="username" id="username" class="form-control" placeholder="Username")
+            label(for="username" ) Username
+
+        .form-floating.mb-3
+            input(type="password" name="password" id="password" class="form-control" placeholder="Password")
+            label(for="password") Password
+
+        .form-floating.mb-3
+            input(type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="ConfirmPassword")
+            label(for="confirmPassword") Confirm Password
+        
+        h2 Membership Level (who can see the author of the post)
+        .d-flex.align-items-center 
+            div(class="form-check mb-3 mx-3")
+                input(type="radio" class="form-check-input" name="membershipLevel" id="bronze" value="bronze")
+                label(for="bronze" class="form-check-label") Bronze
+
+            div(class="form-check mb-3 mx-3")
+                input(type="radio" class="form-check-input" name="membershipLevel" id="silver" value="silver")
+                label(for="silver" class="form-check-label") Silver
+
+            div(class="form-check mb-3 mx-3")
+                input(type="radio" class="form-check-input" name="membershipLevel" id="gold" value="gold")
+                label(for="gold" class="form-check-label") Gold
+        
+        button(type="submit" class="btn btn-success") Submit

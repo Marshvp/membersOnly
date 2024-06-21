@@ -43,7 +43,7 @@ exports.addUser = [
         } 
 
         try {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);{
+            const hashedPassword = await bcrypt.hash(req.body.password, 10) ;{
                 const user = new User({
                     name: req.body.name,
                     password: hashedPassword,

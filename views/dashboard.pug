@@ -4,4 +4,30 @@ block content
 
     h1= title 
 
-    h2 You are logged in as #{user.name}
+    h2 You are logged in as #{user.name}. Your membership level is: #{user.membership}
+
+    h3 Create a post 
+    form(action="/addpost", method="POST")
+        div(class="form-floating mb-3")
+            textarea(name="content", id="post", class="form-control", rows="3" placeholder="post")
+            label(for="post") New Post
+        button(type="submit", class="btn btn-primary") Submit
+
+    
+    h1 Posts
+
+    if(posts.lenght < 1)
+        p no posts
+    else
+        ul(class="list-group")
+            each post in posts
+                li(class="list-group-item")
+                    h3= post.content
+                    if post.postMembershipScore > user.userMembershipScore 
+                        h4 Anonymous Poster 
+                    else 
+                        h4= post.user.name
+                    if user.admin == true
+                        a(href='#' class='btn btn-danger') Delete
+                    p= post.formattedCreatedAt
+

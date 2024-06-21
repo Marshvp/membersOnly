@@ -17,7 +17,23 @@ const userSchema = new Schema({
         required: true,
         enum: ['bronze', 'silver', 'gold'],
         default: 'bronze'
+    },
+    admin: {
+        type: Boolean,
+        default: false
     }
 })
+
+userSchema.virtual('userMembershipScore').get( function() {
+    const score = {
+        bronze: 1,
+        silver: 2,
+        gold: 3
+    }
+    return score[this.membership]
+})
+
+userSchema.set('toJSON', { virtuals: true })
+userSchema.set('toObject', { virtuals: true })
 
 module.exports = mongoose.model('User', userSchema)

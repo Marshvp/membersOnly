@@ -14,8 +14,6 @@ html
           span(class="navbar-toggler-icon")
         div(class="collapse navbar-collapse " id="navItems")
               .navbar-nav
-                a(class="nav-link", href="/") Home
-                a(class="nav-link", href="/test") Test
                 if user
                   a(class="nav-link", href="/dashboard") Dashboard
                   a(class="nav-link", href="/logout") Logout
@@ -23,4 +21,5 @@ html
                   a(class="nav-link", href="/login") Login
 
     
-    block content       
+    block content   
+    block scripts    
