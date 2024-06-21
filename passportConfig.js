@@ -4,7 +4,7 @@ const User = require('./models/users');
 const bcrypt = require('bcryptjs');
 
 
-passoirt,use(
+passport.use(
         new LocalStrategy(async( username, password, done) => {
             try {
                 const user = await User.findOne({ name: username });
@@ -40,4 +40,4 @@ passport.deserializeUser(async (id, done) => {
 })
 
 
-modules.exports = passport
+module.exports = passport

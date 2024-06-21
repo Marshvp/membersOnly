@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/users');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 
 exports.index = asyncHandler(async (req, res) => {
@@ -58,3 +59,31 @@ exports.addUser = [
     })
 ]
 
+exports.loginUser = [
+    body('username')
+        .trim()
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Name must be between 1 and 20 characters')
+        .escape(),
+
+    body('password')
+        .trim()
+        .isLength({ min: 1, max: 20 })
+        .withMessage('Password must be between 1 and 20 characters')
+        .escape(),
+    
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            const users = await User.find();
+            console.log("Errors: ",errors);
+            res.render('test', { users: users, err: errors.array() });
+            return;
+        }
+        passport.authenticate('local', {
+            successRedirect: '/test',
+            failureRedirect: '/test',
+            failureFlash: true
+        })
+    })
+]

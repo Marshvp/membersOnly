@@ -8,7 +8,12 @@ const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const testRouter = require('./routes/test');
+const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 
+
+const passport = require('./passportConfig');
+const session = require('express-session');
 mongoose.set('strictQuery', false);
 
 const mongoDB = process.env.mongoDBURI
@@ -31,10 +36,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: process.env.secret_key,
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/test', testRouter);
+
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+// app.use('/test', testRouter);
+
+app.use('/', authRouter);
+app.use('/', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
