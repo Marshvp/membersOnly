@@ -1,0 +1,48 @@
+extends layout 
+
+block content
+
+    h1 Test Page
+    p This is a test page.
+    .row 
+        .col-md-6
+
+            form(method="post")
+                if (err)
+                    for error in err
+                        p #{error.msg}
+                div(class="container border p-3")
+                    h2 Create User
+                    div(class="form-floating mb-3")
+                        input(type="text" class="form-control" name="name" id="name" placeholder="John Smith" required)
+                        label(for="name") Name 
+                    div(class="form-floating mb-3")
+                        input(type="password" class="form-control" name="password" id="password" placeholder="Password" required)
+                        label(for="password") Password
+                    div(class="form-floating mb-3")
+                        input(type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required)
+                        label(for="confirmPassword") Confirm Password
+                    div(class="form-floating mb-3")
+                        select#membership(name="membership", class="form-select", required)
+                            option(value="none" disabled selected) Select a Membership
+                            option(value="bronze") Bronze
+                            option(value="silver") Silver
+                            option(value="gold") Gold 
+                        label(for="membership") Membership
+                    
+                p
+                    input(type="submit" class="btn btn-primary my-3" value="Create User")
+
+
+
+    h1 list of users
+
+    if(users.lenght < 1)
+        p no users
+    else
+        ul(class="list-group")
+            each user in users
+                li(class="list-group-item")
+                    p Username: #{user.name}
+                    p Password: #{user.password}
+                    p Membership Status: #{user.membership}
