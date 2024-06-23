@@ -73,7 +73,6 @@ exports.registerNewUser_post = [
                         name: req.body.username,
                         password: hashedPassword,
                         membership: req.body.membershipLevel,
-                        admin: true
                     });
                     user.save();
                     res.redirect('/login');
